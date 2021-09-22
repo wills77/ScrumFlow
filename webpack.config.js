@@ -40,9 +40,12 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   devServer: {
+    static: {
+      publicPath: '/',
+      directory: path.resolve(__dirname, './dist')
+    },
     proxy: {
       '/api': 'http://localhost:3000',
     },
-    publicPath: '/',
   }
 };

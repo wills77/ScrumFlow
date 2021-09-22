@@ -21,14 +21,22 @@ app.get('/', (req, res) => {
   res.send(res.body);
 });
 
-app.post('/signup', databaseController.newUsername, databaseController.createUser, (req, res) => {
-  console.log('inside signup endpoint');
-  const ReturnEmptyObject = res.locals.userTasks;
-  return res.status(200).json(ReturnEmptyObject);
+//databaseController.newUsername, databaseController.createUser,
+
+app.post('/api/signup', (req, res) => {
+  // console.log('inside signup endpoint');
+  // const ReturnEmptyObject = res.locals.userTasks;
+  // return res.status(200).json(ReturnEmptyObject);
+
+  console.log('HELLO FROM /api/SIGNUP')
+
+  res.status(200).json('DELICIOUS BURGS')
+
+
 });
 
 // when the frontend / user adds a new task, add it to the database
-app.post('/addtask', databaseController.getUserTasks, databaseController.updateUserTasksDB, (req, res) => {
+app.post('/api/addtask', databaseController.getUserTasks, databaseController.updateUserTasksDB, (req, res) => {
   // let messageFromFront =  JSON.parse(req);
   // console.log(messageFromFront);
   // res.render('send this back somewhere', {user:{display:'idkwhattodo'}});
@@ -42,7 +50,7 @@ app.post('/addtask', databaseController.getUserTasks, databaseController.updateU
 });
 
 // when user tries to log in, check to see user exists if user exists redirect to userProfile endpoint
-app.post('/login', databaseController.validateUser, databaseController.getUserTasks, (req, res) => {
+app.post('/api/login', databaseController.validateUser, databaseController.getUserTasks, (req, res) => {
   console.log('/login endpoint in server works, sending res.locals.userTasks.task');
   // console.log('req.body.username',req.body.username)
   // console.log('req.body.password',req.body.password)

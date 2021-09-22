@@ -23,29 +23,36 @@ export const checkUserActionCreator = (validated, response) => ({
 
 // Add a new user
 export const addUser = (username, password) => (dispatch, getState) => {
-  axios
-    .post('http://localhost:3000/signup',
-      `username=${username}&password=${password}`,
-      {
-        method: 'POST',
-        headers: {
-          // Accept: 'application/json',
-          'Content-type': 'application/x-www-form-urlencoded',
-        },
-      })
-    .then((response) => {
-      // response received is an empty object
-      console.log('expecting none for signup', response);
-      return dispatch(addUserActionCreator());
+  // axios
+  //   .post('localhost:3000/signup',
+  //     `username=${username}&password=${password}`,
+  //     {
+  //       method: 'POST',
+  //       headers: {
+  //         // Accept: 'application/json',
+  //         'Content-type': 'application/x-www-form-urlencoded',
+  //       },
+  //     })
+  //   .then((response) => {
+  //     // response received is an empty object
+  //     console.log('expecting none for signup', response);
+  //     return dispatch(addUserActionCreator());
+  //   })
+  //   .catch((error) => console.log('Error from /signup page, username exists'));
+
+    fetch('/api/signup', {
+      method: 'POST',
+      headers: {'Content-Type': 'Application/json'},
     })
-    .catch((error) => console.log('Error from /signup page, username exists'));
+    .then(res => res.json())
+    .then(stuff => console.log(stuff));
 };
 
 export const checkUser = (username, password) => (dispatch, getState) => {
   console.log(username)
   console.log('this is getstate', getState());
   axios
-    .post('http://localhost:3000/login',
+    .post('/api/login',
       `username=${username}&password=${password}`,
       {
         headers: {
@@ -70,7 +77,7 @@ export const saveTasks = (username, task, taskId) => (dispatch, getState) => {
   // console.log('this is getstate', getState());
   const tasks = `task=${task}&taskId=${taskId}&isCompleted=${false}&username=${username}`;
   axios
-    .post('http://localhost:3000/addtask',
+    .post('api/addtask',
       tasks,
       {
         headers: {
