@@ -1,6 +1,6 @@
 // connecting to mongoDB database
 const mongoose = require("mongoose");
-const MONGO_URI = '';
+const MONGO_URI = 'mongodb+srv://scrumflow:scrumflow@cluster0.eclmp.mongodb.net/ScrumFlow?retryWrites=true&w=majority';
 mongoose.connect(MONGO_URI, {
     // options for the connect method to parse the URI
   useNewUrlParser: true,
@@ -13,7 +13,10 @@ mongoose.connect(MONGO_URI, {
 const Schema = mongoose.Schema;  // used to create models
 
 const userSchema = new Schema({
-    username: String,
+    username: {
+        type: String,
+        unique: true,
+    },
     password: String,
     taskList: [
         {
