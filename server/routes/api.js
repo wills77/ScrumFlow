@@ -15,7 +15,7 @@ router.post(
   }
 )
 
-router.get(
+router.post(
   '/login', 
   userController.login,
   (req, res) => {

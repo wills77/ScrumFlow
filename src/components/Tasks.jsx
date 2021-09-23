@@ -20,7 +20,12 @@ import '../stylesheets/Tasks.scss';
           <h1>{task.content}</h1>
         </div>
         {/* <label class="checkboxContainer"> */}
-          <input type="checkbox" id="complete" checkmark="checkmark" onClick={() => toggleComplete(taskID)}></input>
+          <input 
+            checked={task.isComplete ? 'checked': ''}
+            type="checkbox" 
+            id="complete" 
+            checkmark="checkmark" 
+            onClick={() => toggleComplete(username, taskID)}></input>
         {/* <span class="checkmark"></span> */}
         {/* </label> */}
         <button className="delete" onClick={() => deleteTask(username, taskID)}>✕</button>
