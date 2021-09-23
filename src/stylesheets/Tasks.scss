@@ -1,0 +1,22 @@
+#taskCard{
+    display: flex;
+    // border: 1px solid red;
+    // width: 100em;
+    justify-content: center;
+    align-items: center;
+    // margin-top: 20px;
+    font-size: 10px;
+    border-bottom: 1px solid gray;
+}
+
+
+#completeBy {
+    // border: 1px solid blue;
+    width: 20em;
+}
+
+#taskContent {
+    // border: 1px solid green;
+    width: 50em;
+    // text-align: start;
+}

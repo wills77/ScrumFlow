@@ -2,35 +2,28 @@
 import * as types from '../constants/actionTypes';
 import uniqid from 'uniqid';
 
-const initialState = { // manually login as dummy data
+const initialState = { 
   username: 'juneandnathan',
   taskList: [{
     _id: uniqid(),
     content: 'Finish homework',
     isComplete: false,
     completeBy: 'Saturday'
-  }], // array of objects
+  }],
   loggedIn: true,
 };
 
 export default function taskReducers(state = initialState, action) {
-  // let { taskList } = state; // are we mutating state here?
+
   let newTaskList = JSON.parse(JSON.stringify(state.taskList));
-
-
-  // taskList = JSON.parse(JSON.stringify(state.taskList));
 
   switch (action.type) {
     case 'ADD_TASK': 
-    // let { taskList } = state;
+
     let taskList = state.taskList;
-    // let newUserName = state.username;
       const newTask = action.payload.newTask;
-      const newCompleteBy = action.payload.completeBy;
-      // console.log(action.payload);
-      // console.log(action.payload);
-      // newTaskList.push(newTask);
-      // newUserName = 'nathanandjune';
+      const newCompleteBy = action.payload.completeBy.substr(5, 10);
+      console.log(action.payload.completeBy);
       const newTaskCard = {
         _id: uniqid(),
         content: newTask,
@@ -38,17 +31,32 @@ export default function taskReducers(state = initialState, action) {
         completeBy: newCompleteBy
       }
       taskList = [...taskList, newTaskCard];
-      // console.log(taskList);
-      console.log(taskList);
-      // console.log(state.taskList);
-      // console.log(taskList.length);
-      // console.log(state);
+      const completeBys = [];
+      taskList.forEach(task => completeBys.push(task.completeBy));
+      // console.log(completeBys)
+      completeBys.sort((a, b) => a - b )
+      // completeBys.replace(/-/g, '');
       return {
         ...state,
         taskList
       };
     
-      // delete task
+    case 'TOGGLE_COMPLETE': {
+      
+      const taskList = state.taskList;
+      taskList.map(task => {
+        if (task._id === action.payload) {
+          task.isComplete === false ? task.isComplete = true : task.isComplete = false;
+          }
+        }
+      )
+      console.log('checkbox checked');
+      return {
+        ...state,
+        taskList
+      }
+    }
+
     case 'DELETE_TASK': {
       return {
         taskList: [...state.taskList.filter(task => task._id !== action.payload.taskID)]
@@ -62,7 +70,6 @@ export default function taskReducers(state = initialState, action) {
       };
     }
     case 'CHECK_USER': {
-      // console.log(`action payload`,action.payload.username);
       const tasks = action.payload.response;
       taskList = {};
       let newKey;
@@ -73,11 +80,8 @@ export default function taskReducers(state = initialState, action) {
         }
         newKey = key;
         if (value.taskName === 'You currently have no tasks!') newKey = -1;
-        // console.log(value.taskName)
-        // console.log(key, value);
       }
-      // console.log(taskList);
-      console.log(`newkey`,newKey);
+      // console.log(`newkey`,newKey);
       return {
         ...state,
         taskId: newKey+1,
