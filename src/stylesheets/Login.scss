@@ -1,0 +1,64 @@
+.inputStyle {
+	display: flex;
+	margin-bottom: 3px;
+}
+
+.loginInfo {
+	width: 7em;
+}
+
+#loginInput {
+	// display: flex;
+}
+
+.loginInfoContainer {
+	display: flex;
+	flex-direction: column;
+	// align-items: center;
+}
+
+#passwordButton {
+	border: 1px solid rgb(160, 213, 231);
+	background-color: white;
+	color: rgb(160, 213, 231);
+	margin-right: 5px;
+	margin-top: 10px;
+	padding: 8px;
+	width: 5em;
+	font-size: 15px;
+}
+
+#passwordButton:hover {
+	transition: 0.3s ease-in;
+	color: white;
+	background-color: rgb(160, 213, 231);
+}
+
+#loginButton {
+	color: white;
+	background-color: rgb(160, 213, 231);
+	border: 1px solid rgb(160, 213, 231);
+	margin-right: 5px;
+	margin-top: 10px;
+	padding: 8px;
+	width: 5em;
+	font-size: 15px;
+}
+
+#loginButton:hover {
+	transition: 0.3s ease-in;
+	color: rgb(160, 213, 231);
+	background-color: white;
+	border: 1px solid rgb(160, 213, 231);
+}
+
+.loginInfo {
+	color: rgb(53, 53, 53);
+}
+
+.inputBox {
+	// border: 1px solid red;
+	width: 15em;
+	border: 1px solid rgb(53, 53, 53);
+	padding: 3px;
+}
