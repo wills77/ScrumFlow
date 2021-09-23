@@ -45,17 +45,19 @@ router.delete(
   (req, res) => {
     console.log('goodbye from /api/task')
     const newTaskList = res.locals.newTaskList;
-    res.status(200).json('/api/task')
     res.status(200).json(newTaskList);
   }
 )
 
 
-router.patch('/task', (req, res) => {
-  console.log('hello patch from /api/task')
-  res.status(200).json('/api/task')
-
-})
+router.patch('/task', 
+  userController.toggleComplete,
+  (req, res) => {
+    const newTaskList = res.locals.newTaskList;
+    console.log('hello patch from /api/task')
+    res.status(200).json(newTaskList);
+  }
+)
 
 
 module.exports = router;

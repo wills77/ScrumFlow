@@ -110,8 +110,46 @@ userController.deleteTask = async (req, res, next) => {
 
 
   } catch (error) {
-
+    return next(error);
   }
+}
+
+userController.toggleComplete = async (req, res, next) => {
+
+  try {
+    const { username, id } = req.body;
+
+    const userInDb = await models.User.findOne({ username: username });
+  
+    const { taskList } = userInDb;
+  
+    const updatedTaskList = taskList.map(task => {
+      if (task._id.toString() === id) {
+        return {
+          ...task.toObject(),
+          isComplete: !task.isComplete
+        }
+      }
+      return task;
+    })
+  
+    const updatedUser = await models.User.findOneAndUpdate(
+      { username: username },
+      { taskList: updatedTaskList },
+      { new: true }
+    )
+  
+    const newTaskList = updatedUser.taskList;
+  
+    res.locals.newTaskList = newTaskList;
+  
+    return next()
+
+  } catch (error) {
+    return next(error);
+  }
+
+
 
 }
 
