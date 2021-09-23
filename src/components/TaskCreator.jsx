@@ -41,12 +41,13 @@ class TaskCreator extends Component {
     return(
       <div>
         <h3>Create New Tasks</h3>
-        <input type='text' id='newTask'></input>
+        <input type='text' id='newTask' placeholder='Enter Task Here'></input>
+        <input type='text' id='completeBy' placeholder = 'Complete By Date'></input>
         {/* <input type='button' id='newTask' onClick={() => props.addTask('hello')}> Add Task</input> */}
         <button onClick={() => {
+          console.log(document.getElementById('completeBy').value)
           // onSave(dispatch);
-          return this.props.addTask(this.props.username, document.getElementById('newTask').value, this.props.taskId); 
-        }
+          return this.props.addTask(this.props.username, document.getElementById('newTask').value, document.getElementById('completeBy').value )}
         }>Add Task</button>
       </div>
     )

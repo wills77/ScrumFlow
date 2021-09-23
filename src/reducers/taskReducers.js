@@ -1,38 +1,60 @@
 /* eslint-disable */
 import * as types from '../constants/actionTypes';
+import uniqid from 'uniqid';
 
-const initialState = {
-  taskList: {},
-  taskId: 0,
-  loggedIn: false,
-  username: '',
+const initialState = { // manually login as dummy data
+  username: 'juneandnathan',
+  taskList: [{
+    _id: uniqid(),
+    content: 'Finish homework',
+    isComplete: false,
+    completeBy: 'Saturday'
+  }], // array of objects
+  loggedIn: true,
 };
 
 export default function taskReducers(state = initialState, action) {
-  let taskList;
-  let { taskId } = state;
+  // let { taskList } = state; // are we mutating state here?
+  let newTaskList = JSON.parse(JSON.stringify(state.taskList));
+
+
+  // taskList = JSON.parse(JSON.stringify(state.taskList));
 
   switch (action.type) {
-    case 'ADD_TASK': {
-      const newTask = {
-        taskId: {
-          task: action.payload,
-          completed: false,
-        },
-      };
-
-      // make a copy of state for taskList
-      // taskList = Object.create({}, state.taskList);
-      // taskList[taskId] = newTask.taskId;
-      taskList = JSON.parse(JSON.stringify(state.taskList));
-      taskList[taskId] = newTask.taskId;
-      taskId = state.taskId + 1;
+    case 'ADD_TASK': 
+    // let { taskList } = state;
+    let taskList = state.taskList;
+    // let newUserName = state.username;
+      const newTask = action.payload.newTask;
+      const newCompleteBy = action.payload.completeBy;
+      // console.log(action.payload);
+      // console.log(action.payload);
+      // newTaskList.push(newTask);
+      // newUserName = 'nathanandjune';
+      const newTaskCard = {
+        _id: uniqid(),
+        content: newTask,
+        isComplete: false,
+        completeBy: newCompleteBy
+      }
+      taskList = [...taskList, newTaskCard];
+      // console.log(taskList);
+      console.log(taskList);
+      // console.log(state.taskList);
+      // console.log(taskList.length);
+      // console.log(state);
       return {
         ...state,
-        taskList,
-        taskId,
+        taskList
       };
+    
+      // delete task
+    case 'DELETE_TASK': {
+      return {
+        taskList: [...state.taskList.filter(task => task._id !== action.payload.taskID)]
+      }
     }
+
     case 'ADD_USER': {
       alert('You\'ve signed up please log in');
       return {

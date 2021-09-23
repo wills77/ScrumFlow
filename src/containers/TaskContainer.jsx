@@ -6,24 +6,29 @@ import TaskDisplay from '../components/TaskDisplay';
 import * as actions from '../actions/actions';
 import '../stylesheets/styles.css';
 
-const mapStateToProps = state => (
-  // provide pertinent state here
-  // what are the properties of state that this component wants to subscribe to?
-  {
+const mapStateToProps = state => {
+  
+  console.log(state.tasks.taskList._id);
+
+  return {
     taskList: state.tasks.taskList,
-    taskId: state.tasks.taskId
-});
+    username: state.tasks.username
+  }
+};
 
 const mapDispatchToProps = dispatch => ({
   // create functions that will dispatch action creators
-  addTask: (username, task, taskId) => {
+  addTask: (username, newTask, completeBy) => {
     // console.log(`props`,this.propzs)
-    console.log(username)
+    // console.log(username) 
     // this.onSave(task)
     // return dispatch(actions.addTaskActionCreator(task))
-    return dispatch(actions.saveTasks(username, task, taskId));
+    return dispatch(actions.addTask(username, newTask, completeBy));
   },
   // onSave: () => {console.log('onSave works on button click')}
+  deleteTask: (username, taskID) => {
+    return dispatch(actions.deleteTask(username, taskID));
+  }
 
 });
 
@@ -39,8 +44,8 @@ class TaskContainer extends React.Component {
   render() {
     return (
       <div>
-        <TaskCreator username={this.props.username} addTask={this.props.addTask} taskId={this.props.taskId}/>
-        <TaskDisplay taskList={this.props.taskList} />
+        <TaskCreator username={this.props.username} addTask={this.props.addTask}/>
+        <TaskDisplay taskList={this.props.taskList} username={this.props.username} deleteTask={this.props.deleteTask} />
       </div>
     )
   }

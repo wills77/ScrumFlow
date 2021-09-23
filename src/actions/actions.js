@@ -3,10 +3,21 @@ import axios from 'axios';
 // import thunk from 'redux-thunk';
 import * as types from '../constants/actionTypes';
 
-export const addTaskActionCreator = (task) => ({
+export const addTaskActionCreator = (newTask, completeBy) => ({
   type: types.ADD_TASK,
-  payload: task,
+  payload: {
+    newTask,
+    completeBy
+  }
 });
+
+export const deleteTaskActionCreator = (username, taskID) => ({
+  type: types.DELETE_TASK,
+  payload: {
+    username: username,
+    taskID: taskID
+  }
+})
 
 export const addUserActionCreator = () => ({
   type: types.ADD_USER,
@@ -70,22 +81,30 @@ export const checkUser = (username, password) => (dispatch, getState) => {
 };
 // &username=${username}
 // Body needs to match content-type
-export const saveTasks = (username, task, taskId) => (dispatch, getState) => {
-  console.log('saveTasks username, ', username);
-  console.log('saveTasks task action, ', task);
-  console.log('saveTasks taskId action, ', taskId);
+export const addTask = (username, newTask, completeBy) => (dispatch, getState) => {
+  // console.log('saveTasks username, ', username);
+  // console.log('saveTasks task action, ', task);
+  // console.log('saveTasks taskId action, ', taskId);
   // console.log('this is getstate', getState());
-  const tasks = `task=${task}&taskId=${taskId}&isCompleted=${false}&username=${username}`;
-  axios
-    .post('api/addtask',
-      tasks,
-      {
-        headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
-        },
-      })
-    .then((response) => {
-      console.log('response from the saveTasks: ', response);
-      return dispatch(addTaskActionCreator(task));
-    });
+
+  // REWRITE THIS CODE (FETCH)
+  // const tasks = `task=${newTask}&taskId=${taskId}&isCompleted=${false}&username=${username}`;
+  // axios
+  //   .post('api/addtask',
+  //     tasks,
+  //     {
+  //       headers: {
+  //         'Content-type': 'application/x-www-form-urlencoded',
+  //       },
+  //     })
+  //   .then((response) => {
+  //     console.log('response from the saveTasks: ', response);
+  //     return dispatch(addTaskActionCreator(newTask));
+  //   });
+
+  return dispatch(addTaskActionCreator(newTask, completeBy));
 };
+
+export const deleteTask = (username, taskID) => (dispatch, getState) => {
+  return dispatch(deleteTaskActionCreator(username, taskID));
+}
