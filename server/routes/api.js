@@ -1,30 +1,54 @@
 const express = require('express');
+const userController = require('../controllers/userController.js')
 
 const router = express.Router();
 
 
-router.post('/signup', (req, res) => {
-  console.log('hello from /signup')
-  res.status(200).json('/api/signup')
-})
+router.post(
+  '/signup', 
+  userController.addNewUser,
+  (req, res) => {
+    //console.log(res.locals.newUser);
+    const newUser = res.locals.newUser;
+    //console.log('hello from /signup')
+    res.status(200).json(newUser)
+  }
+)
 
-router.get('/login', (req, res) => {
-  console.log('welcome from /login')
-  res.status(200).json('/api/login')
+router.get(
+  '/login', 
+  userController.login,
+  (req, res) => {
 
-})
+    console.log(res.locals.userInDb);
+    const userInDb = res.locals.userInDb;
 
-router.put('/task', (req, res) => {
-  console.log('hello put from /api/task')
-  res.status(200).json('/api/task')
+    console.log('welcome from /login')
+    res.status(200).json(userInDb)
+  }
+)
 
-})
+router.put(
+  '/task', 
+  userController.addTask,
+  (req, res) => {
+    console.log('hello put from /api/task')
+    const newTaskList = res.locals.newTaskList;
+    res.status(200).json(newTaskList)
 
-router.delete('/task', (req, res) => {
-  console.log('goodbye from /api/task')
-  res.status(200).json('/api/task')
+  }
+)
 
-})
+router.delete(
+  '/task', 
+  userController.deleteTask,
+  (req, res) => {
+    console.log('goodbye from /api/task')
+    const newTaskList = res.locals.newTaskList;
+    res.status(200).json('/api/task')
+    res.status(200).json(newTaskList);
+  }
+)
 
 
 router.patch('/task', (req, res) => {
