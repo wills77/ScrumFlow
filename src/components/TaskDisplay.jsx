@@ -1,43 +1,19 @@
 import React from 'react';
 import Tasks from './Tasks'
-import '../stylesheets/styles.css';
+// import '../stylesheets/styles.scss';
+import '../stylesheets/TaskDisplay.scss'
 
-const TaskDisplay = ({taskList, taskID, deleteTask, username}) => {
-  // const tasks = [];
-  // // const taskList = props.taskList;
-  // // for (let id in taskList) {
-  // //   tasks.push(<Tasks key={id} taskName={taskList[id].task} />)
-  // // };
+const TaskDisplay = ({taskList, taskID, deleteTask, username, toggleComplete}) => {
   const tasks = taskList.map(task => {
     return (
-      <Tasks task={task} taskID={taskID} deleteTask={deleteTask} username={username} />
+      <Tasks task={task} taskID={taskID} deleteTask={deleteTask} username={username} toggleComplete = {toggleComplete}/>
     )
   })
   return (
-    <div>
+    <div id="taskContainer">
       {tasks}
-      {/* {taskList} */}
     </div>
   )
 }
-
-// class TaskDisplay extends Component {
-//   render() {
-
-//     console.log(this.props)
-
-//     const tasks = this.props.map(task => {
-//       return (
-//         <Tasks task={task} />
-//       )
-//     })
-
-//     return (
-//       <div>
-//         {tasks}
-//       </div>
-//     )
-//   }
-// }
 
 export default TaskDisplay;

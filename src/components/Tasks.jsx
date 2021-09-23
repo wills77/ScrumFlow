@@ -1,44 +1,33 @@
 import React from 'react';
-import '../stylesheets/styles.css';
+import { toggleComplete } from '../actions/actions';
+import '../stylesheets/styles.scss';
+import '../stylesheets/Tasks.scss';
 
-// const Tasks = ({ task, dispatch }) => {
-  const Tasks = ({ task, deleteTask, username }) => {
-  // console.log(`task props ${props.taskList}`)
-// console.log(task.isComplete);
+  const Tasks = ({ task, deleteTask, username, toggleComplete }) => {
     function getTaskID({_id}) {
       return _id;
     }
     const taskID = getTaskID(task);
-    console.log(taskID);
+    // console.log('ID: ' + taskID);
 
   return (
     <div> 
-      {/* // checkbox here // delete button */}
-      {/* <h1>{task.isComplete ? 'COMPLETED' : 'NOT COMPLETE'}</h1> */}
-      <button onClick={() => deleteTask(username, taskID)}>Delete Task</button>
-      <h1>{task.completeBy}</h1>
-      <h1>{task.content}</h1>
-      <input type="checkbox" id="completed" onClick={() => console.log('checkbox checked')}></input>
+      <div id='taskCard'>
+        <div id='completeBy'>
+          <h1>{task.completeBy}</h1>
+        </div>
+        <div id='taskContent'>
+          <h1>{task.content}</h1>
+        </div>
+        {/* <label class="checkboxContainer"> */}
+          <input type="checkbox" id="complete" checkmark="checkmark" onClick={() => toggleComplete(taskID)}></input>
+        {/* <span class="checkmark"></span> */}
+        {/* </label> */}
+        <button className="delete" onClick={() => deleteTask(username, taskID)}>✕</button>
+      </div>
     </div>
   )
 }
 
 // if taskid matches id passedin , update its isComplete state (use map & if)
-
-// class Tasks extends Component {
-
-//   render() {
-//     return (
-//       <div> 
-//         <button onClick={() => {
-//           console.log()
-//         }}>Delete Task</button>
-//         <h1>{this.props.completeBy}</h1>
-//         <h1>{this.props.content}</h1>
-//         <input type="checkbox" id="completed" onClick={() => console.log('checkbox checked')}></input>
-//       </div>
-//     ) 
-//   }
-// }
-
 export default Tasks;

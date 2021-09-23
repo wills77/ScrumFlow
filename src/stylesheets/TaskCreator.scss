@@ -1,0 +1,45 @@
+$inputColor : rgb(215, 215, 215);
+// $inputColor: rgb(148, 218, 255);
+
+#newTask {
+    // font-size: 100px;
+}
+
+.task-creator-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-creator-container {
+  padding: 1.5em;
+}
+
+.task-creator {
+  display: flex;
+  justify-content: center;
+  // border: 1px solid purple
+}
+
+.taskInputFields {
+    width: 100%;
+    font-size: 15px;
+    border: 1px solid $inputColor;
+    padding: 5px 5px 5px 10px;
+    text-align: center;
+    &.date {
+      width: 30%;
+    }
+    &.time {
+      width: 30%;
+    }
+}
+
+#completeBy {
+    border-left: none;
+}
+
+#addTaskButton {
+    padding-left: 25px;
+}
