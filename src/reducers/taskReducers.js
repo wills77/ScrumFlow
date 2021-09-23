@@ -2,15 +2,17 @@
 import * as types from '../constants/actionTypes';
 import uniqid from 'uniqid';
 
+const dummy = {
+  _id: uniqid(),
+  content: 'Finish homework',
+  isComplete: false,
+  completeBy: 'Saturday'
+}
+
 const initialState = { 
-  username: 'juneandnathan',
-  taskList: [{
-    _id: uniqid(),
-    content: 'Finish homework',
-    isComplete: false,
-    completeBy: 'Saturday'
-  }],
-  loggedIn: true,
+  username: '',
+  taskList: [],
+  loggedIn: false,
 };
 
 export default function taskReducers(state = initialState, action) {
@@ -18,8 +20,14 @@ export default function taskReducers(state = initialState, action) {
   let newTaskList = JSON.parse(JSON.stringify(state.taskList));
 
   switch (action.type) {
+    case 'UPDATE_TASKLIST': {
+      return {
+        ...state,
+        taskList: action.payload
+      }
+    }
+    
     case 'ADD_TASK': 
-
     let taskList = state.taskList;
       const newTask = action.payload.newTask;
       const newCompleteBy = action.payload.completeBy.substr(5, 10);
@@ -64,31 +72,24 @@ export default function taskReducers(state = initialState, action) {
     }
 
     case 'ADD_USER': {
-      alert('You\'ve signed up please log in');
+  
       return {
         ...state,
+        username: action.payload,
+        loggedIn: true
       };
     }
-    case 'CHECK_USER': {
-      const tasks = action.payload.response;
-      taskList = {};
-      let newKey;
-      for (const [key, value] of Object.entries(tasks)) {
-        taskList[key] = {
-          task: value.taskName,
-          completed: value.isCompleted,
-        }
-        newKey = key;
-        if (value.taskName === 'You currently have no tasks!') newKey = -1;
-      }
-      // console.log(`newkey`,newKey);
+    case 'LOGIN': {
+      const taskList = action.payload.taskList;
+      const username = action.payload.username;
+
       return {
         ...state,
-        taskId: newKey+1,
-        taskList,
-        loggedIn: action.payload.validated,
-        username: action.payload.username,
-      };
+        loggedIn: true,
+        username: username,
+        taskList: taskList
+      }
+
     }
     default: {
       return state;

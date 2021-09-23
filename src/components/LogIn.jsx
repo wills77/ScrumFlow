@@ -24,7 +24,7 @@ class LogIn extends React.Component {
       */}
         <button
           onClick={() => {
-            return this.props.checkUser(document.getElementById('usernameInput').value, document.getElementById('passwordInput').value);
+            return this.props.login(document.getElementById('usernameInput').value, document.getElementById('passwordInput').value);
           }}>Log in
         </button>
       </div>

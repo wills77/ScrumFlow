@@ -20,8 +20,8 @@ const mapDispatchToProps = dispatch => ({
   addTask: (username, newTask, completeBy) => {
     return dispatch(actions.addTask(username, newTask, completeBy));
   },
-  toggleComplete: (taskID) => {
-    return dispatch(actions.toggleComplete(taskID));
+  toggleComplete: (username, taskID) => {
+    return dispatch(actions.toggleComplete(username, taskID));
   },
   deleteTask: (username, taskID) => {
     return dispatch(actions.deleteTask(username, taskID));

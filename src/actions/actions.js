@@ -23,56 +23,120 @@ export const deleteTaskActionCreator = (username, taskID) => ({
   }
 })
 
-export const addUserActionCreator = () => ({
+export const addUserActionCreator = (username) => ({
   type: types.ADD_USER,
+  payload: username
 });
 
-export const checkUserActionCreator = (validated, response) => ({
-  type: types.CHECK_USER,
+export const loginActionCreator = (username, taskList) => ({
+  type: types.LOGIN,
   payload: {
-    validated : validated,
-    response: response.task,
-    username: response.username,
+    username: username,
+    taskList: taskList
   },
 });
+
+export const updateTaskListActionCreator = (taskList) => ({
+  type: types.UPDATE_TASKLIST,
+  payload: taskList
+})
 
 export const addUser = (username, password) => (dispatch, getState) => {
 
     fetch('/api/signup', {
       method: 'POST',
       headers: {'Content-Type': 'Application/json'},
+      body: JSON.stringify({
+        username: username,
+        password: password
+      })
     })
     .then(res => res.json())
-    .then(stuff => console.log(stuff));
+    .then(({ username }) => {
+      console.log(username)
+      dispatch(addUserActionCreator(username))
+
+
+    })
+    .catch(() => {
+      alert('oopsy, please try again')
+    })
 };
 
-export const checkUser = (username, password) => (dispatch, getState) => {
-  // console.log(username)
-  // console.log('this is getstate', getState());
-  axios
-    .post('/api/login',
-      `username=${username}&password=${password}`,
-      {
-        headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
-        },
-      })
+export const login = (username, password) => (dispatch, getState) => {
+  console.log('hello from login', username, password);
+  fetch('/api/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'Application/json'},
+    body: JSON.stringify({
+      username: username,
+      password: password
+    })
+  })
+  .then(res => res.json())
+  .then(({ username, taskList }) => {
 
-    .then((response) => {
-      const validated = true;
-      if (!response.data.task) return dispatch(checkUserActionCreator(validated));
-      else return dispatch(checkUserActionCreator(validated, response.data.task));
-    });
+    if (!username) {
+      alert('Sorry, no user with that username or password');
+      return;
+    }
+    dispatch(loginActionCreator(username, taskList))
+  })
+  .catch(() => alert("uh oh, please try loggin in again"))
+
 };
 
 export const addTask = (username, newTask, completeBy) => (dispatch, getState) => {
-  return dispatch(addTaskActionCreator(newTask, completeBy));
+  fetch('api/task', {
+    method: 'PUT',
+    headers: {'Content-Type': 'Application/json'},
+    body: JSON.stringify({
+      username: username,
+      newTask: {
+        isComplete: false,
+        content: newTask,
+        completeBy: completeBy
+      }
+    })
+  })
+  .then(res => res.json())
+  .then((taskList) => {
+    dispatch(updateTaskListActionCreator(taskList))
+  })
 };
 
 export const deleteTask = (username, taskID) => (dispatch, getState) => {
-  return dispatch(deleteTaskActionCreator(username, taskID));
+  fetch('api/task', {
+    method: 'DELETE',
+    headers: {'Content-Type': 'Application/json'},
+    body: JSON.stringify({
+      username: username,
+      id: taskID
+    })
+  })
+  .then(res => res.json())
+  .then((taskList) => {
+    console.log(taskList)
+    dispatch(updateTaskListActionCreator(taskList))
+  })
 }
 
-export const toggleComplete = (taskID) => (dispatch, getState) => {
-  return dispatch(toggleCompleteActionCreator(taskID));
+export const toggleComplete = (username, taskID) => (dispatch, getState) => {
+  console.log('taskId:', taskID)
+  console.log('username', username)
+  fetch('api/task', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'Application/json'
+    },
+    body: JSON.stringify({
+      username: username,
+      id: taskID,
+    })
+  })
+  .then(res => res.json())
+  .then((taskList) => {
+    dispatch(updateTaskListActionCreator(taskList))
+  })
+
 }

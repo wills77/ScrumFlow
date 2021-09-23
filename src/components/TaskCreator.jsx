@@ -10,14 +10,14 @@ class TaskCreator extends Component {
     return(
       <div 
       className="task-creator-container">
-        <h3>Create New Tasks</h3>
-
+        {/* <h3>Create New Tasks</h3> */}
+        {/* {`Hello ${username}`} */}
         <div className="task-creator">
-          <input id="task" type='text' className='taskInputFields' id='newTask' placeholder='Write Task Here'></input>
+          <input id="task" type='text' className='taskInputFields' id='newTask' placeholder='Create New Task'></input>
           <input id="date" type='date' className='taskInputFields date' id='completeBy' placeholder = 'Complete By Date'></input>
           <input id="time" type='time' className='taskInputFields time' id='completeBy' placeholder = 'Complete By Date'></input>
           <button id = 'addTaskButton' onClick={() => {
-          return this.props.addTask(this.props.username, document.getElementById('newTask').value, document.getElementById('completeBy').value )}
+          return this.props.addTask(this.props.username, document.getElementById('newTask').value, document.getElementById('completeBy').value.substr(6, 10) )}
         }>＋</button>
         </div>
       </div>
